@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.geekvault.ui.auth.AuthViewModel
 import com.example.geekvault.ui.auth.LoginScreen
 import com.example.geekvault.ui.auth.RegisterScreen
+import com.example.geekvault.ui.contact.ContactScreen
 import com.example.geekvault.ui.main.MainScaffold
 import com.google.firebase.auth.FirebaseAuth
 
@@ -91,6 +92,12 @@ fun AppNavigation() {
                 ) {
                     Text("Profil")
                 }
+            }
+        }
+
+        composable(AppDestinations.CONTACT) {
+            MainScaffold(navController = navController) {
+                ContactScreen()
             }
         }
     }

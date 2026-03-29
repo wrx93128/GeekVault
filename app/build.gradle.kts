@@ -49,6 +49,13 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    
+    // Material 2 (required by some icons)
+    implementation(libs.androidx.compose.material)
+    
+    // Icons
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
@@ -71,6 +78,10 @@ dependencies {
 
     // Coil
     implementation(libs.coil.compose)
+
+    // Maps & Permissions
+    implementation(libs.maps.compose)
+    implementation(libs.accompanist.permissions)
 
     // Testing
     testImplementation(libs.junit)

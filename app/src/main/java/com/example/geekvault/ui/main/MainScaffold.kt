@@ -24,13 +24,13 @@ import com.example.geekvault.navigation.AppDestinations
 import kotlinx.coroutines.launch
 
 /**
- * Top-level scaffold shared by all main destinations (Home, Favorites, Profile).
+ * Top-level scaffold shared by all main destinations (Home, Favorites, Profile, Contact).
  *
  * Wraps [content] in a [ModalNavigationDrawer] + [Scaffold] combination that provides:
  * - A [TopAppBar] whose title reflects the currently active route, plus a hamburger
  *   icon that opens the navigation drawer.
  * - An [AppDrawer] side drawer for section navigation and sign-out.
- * - A [BottomNavBar] for quick switching between the three main sections.
+ * - A [BottomNavBar] for quick switching between the main sections.
  *
  * @param navController The app-level [NavController] used by the drawer and bottom bar.
  * @param content       The screen content to display inside the scaffold body.
@@ -51,6 +51,7 @@ fun MainScaffold(
         AppDestinations.HOME      -> "Home"
         AppDestinations.FAVORITES -> "Ulubione"
         AppDestinations.PROFILE   -> "Profil"
+        AppDestinations.CONTACT   -> "Kontakt"
         else                      -> "GeekVault"
     }
 

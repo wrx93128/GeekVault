@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -36,7 +37,8 @@ private data class DrawerNavItem(
 private val drawerNavItems = listOf(
     DrawerNavItem(AppDestinations.HOME,      "Home",      Icons.Default.Home),
     DrawerNavItem(AppDestinations.FAVORITES, "Ulubione",  Icons.Default.Favorite),
-    DrawerNavItem(AppDestinations.PROFILE,   "Profil",    Icons.Default.Person)
+    DrawerNavItem(AppDestinations.PROFILE,   "Profil",    Icons.Default.Person),
+    DrawerNavItem(AppDestinations.CONTACT,   "Kontakt",   Icons.Default.Email)
 )
 
 /**

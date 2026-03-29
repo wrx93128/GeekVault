@@ -13,4 +13,5 @@ object AppDestinations {
     const val HOME      = "home"
     const val FAVORITES = "favorites"
     const val PROFILE   = "profile"
+    const val CONTACT   = "contact"
 }
