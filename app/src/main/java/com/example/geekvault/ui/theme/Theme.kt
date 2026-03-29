@@ -49,16 +49,18 @@ private val LightColorScheme = lightColorScheme(
 /**
  * GeekVault app theme.
  *
- * Defaults to dark (navy) mode. Dynamic color adapts to the user's wallpaper on Android 12+.
+ * Always applies the custom navy/cyan dark or light palette defined in [Color].
+ * Dynamic color is intentionally disabled so the branded colour scheme is
+ * consistent across all devices regardless of wallpaper.
  *
  * @param darkTheme Whether to apply the dark color scheme.
- * @param dynamicColor When true, uses Material You dynamic color on Android 12+.
+ * @param dynamicColor Reserved for testing; always false in production builds.
  * @param content The composable content to theme.
  */
 @Composable
 fun GeekVaultTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
