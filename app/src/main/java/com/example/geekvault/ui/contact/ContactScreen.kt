@@ -33,7 +33,6 @@ fun ContactScreen() {
     )
 
     Column(modifier = Modifier.fillMaxSize()) {
-        // Górna połowa: Mapa
         Box(modifier = Modifier.weight(1f)) {
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
@@ -50,12 +49,10 @@ fun ContactScreen() {
                 )
             }
 
-            // Przycisk "Moja lokalizacja" na mapie
             Button(
                 onClick = {
                     if (locationPermissionState.status.isGranted) {
-                        // Jeśli uprawnienie jest już przyznane, mapa sama obsłuży warstwę lokalizacji
-                        // Możemy ewentualnie przesunąć kamerę, ale w zadaniu chodzi o włączenie warstwy.
+
                     } else {
                         locationPermissionState.launchPermissionRequest()
                     }
@@ -68,7 +65,6 @@ fun ContactScreen() {
             }
         }
 
-        // Dolna połowa: Przyciski Intentów
         Column(
             modifier = Modifier
                 .weight(1f)

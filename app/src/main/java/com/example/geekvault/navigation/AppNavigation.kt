@@ -6,14 +6,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.geekvault.data.AppDatabase
 import com.example.geekvault.ui.auth.AuthViewModel
 import com.example.geekvault.ui.auth.LoginScreen
 import com.example.geekvault.ui.auth.RegisterScreen
 import com.example.geekvault.ui.contact.ContactScreen
+import com.example.geekvault.ui.favorites.FavoritesScreen
+import com.example.geekvault.ui.favorites.FavoritesViewModel
 import com.example.geekvault.ui.main.MainScaffold
 import com.google.firebase.auth.FirebaseAuth
 
@@ -31,6 +35,7 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val context = LocalContext.current
 
     val startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
         AppDestinations.HOME
@@ -74,13 +79,12 @@ fun AppNavigation() {
         }
 
         composable(AppDestinations.FAVORITES) {
+            val database = AppDatabase.getDatabase(context)
+            val viewModel: FavoritesViewModel = viewModel(
+                factory = FavoritesViewModel.Factory(database.favoriteDao())
+            )
             MainScaffold(navController = navController) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Ulubione")
-                }
+                FavoritesScreen(viewModel = viewModel)
             }
         }
 

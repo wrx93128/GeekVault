@@ -1,6 +1,7 @@
 package com.example.geekvault.ui.favorites
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.geekvault.data.FavoriteCharacter
 import com.example.geekvault.data.FavoriteDao
@@ -27,6 +28,16 @@ class FavoritesViewModel(private val favoriteDao: FavoriteDao) : ViewModel() {
     fun updateNote(characterId: Int, note: String) {
         viewModelScope.launch {
             favoriteDao.updateNote(characterId, note)
+        }
+    }
+
+    class Factory(private val favoriteDao: FavoriteDao) : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(FavoritesViewModel::class.java)) {
+                return FavoritesViewModel(favoriteDao) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 }
