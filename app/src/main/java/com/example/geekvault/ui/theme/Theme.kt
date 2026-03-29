@@ -1,6 +1,5 @@
 package com.example.geekvault.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -12,31 +11,53 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary             = CyanBlue,
+    onPrimary           = CyanBlueDark,
+    primaryContainer    = CyanBlueContainer,
+    onPrimaryContainer  = CyanBlueOnContainer,
+    secondary           = Lavender,
+    onSecondary         = LavenderDark,
+    secondaryContainer  = LavenderContainer,
+    onSecondaryContainer = LavenderOnContainer,
+    background          = NavyBackground,
+    onBackground        = TextPrimary,
+    surface             = NavySurface,
+    onSurface           = TextPrimary,
+    surfaceVariant      = NavySurfaceVariant,
+    onSurfaceVariant    = TextSecondary,
+    error               = ErrorRed,
+    errorContainer      = ErrorRedContainer,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary             = NavyLight,
+    onPrimary           = SurfaceLight,
+    primaryContainer    = NavyLightContainer,
+    onPrimaryContainer  = NavyLightOnContainer,
+    secondary           = LavenderLight,
+    onSecondary         = SurfaceLight,
+    secondaryContainer  = LavenderLightContainer,
+    onSecondaryContainer = LavenderLightOnContainer,
+    background          = BackgroundLight,
+    onBackground        = TextOnLight,
+    surface             = SurfaceLight,
+    onSurface           = TextOnLight,
+    surfaceVariant      = SurfaceVariantLight,
+    onSurfaceVariant    = TextSecondaryLight,
 )
 
+/**
+ * GeekVault app theme.
+ *
+ * Defaults to dark (navy) mode. Dynamic color adapts to the user's wallpaper on Android 12+.
+ *
+ * @param darkTheme Whether to apply the dark color scheme.
+ * @param dynamicColor When true, uses Material You dynamic color on Android 12+.
+ * @param content The composable content to theme.
+ */
 @Composable
 fun GeekVaultTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -45,7 +66,6 @@ fun GeekVaultTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

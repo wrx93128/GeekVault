@@ -59,6 +59,9 @@ dependencies {
     // Splash screen
     implementation(libs.androidx.core.splashscreen)
 
+    // Material Components — provides Theme.Material3.DayNight.NoActionBar for XML themes
+    implementation(libs.material)
+
     // Firebase BOM — versions for all firebase-* artifacts managed by BOM
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.ktx)
