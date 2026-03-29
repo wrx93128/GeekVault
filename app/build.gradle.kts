@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.geekvault"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.geekvault"
         minSdk = 31
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -68,6 +68,9 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+
+    // Coil
+    implementation(libs.coil.compose)
 
     // Testing
     testImplementation(libs.junit)
