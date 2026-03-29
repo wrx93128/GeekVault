@@ -1,8 +1,10 @@
 package com.example.geekvault.ui.contact
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.location.Location
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -15,17 +17,27 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*
+import kotlinx.coroutines.launch
 
+@SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ContactScreen() {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val warsawCenter = LatLng(52.237049, 21.017532)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(warsawCenter, 15f)
+    }
+
+    val fusedLocationClient: FusedLocationProviderClient = remember {
+        LocationServices.getFusedLocationProviderClient(context)
     }
 
     val locationPermissionState = rememberPermissionState(
@@ -40,7 +52,11 @@ fun ContactScreen() {
                 properties = MapProperties(
                     isMyLocationEnabled = locationPermissionState.status.isGranted
                 ),
-                uiSettings = MapUiSettings(myLocationButtonEnabled = false)
+                uiSettings = MapUiSettings(
+                    myLocationButtonEnabled = false,
+                    zoomControlsEnabled = true
+                ),
+                contentPadding = PaddingValues(bottom = 80.dp)
             ) {
                 Marker(
                     state = MarkerState(position = warsawCenter),
@@ -52,7 +68,22 @@ fun ContactScreen() {
             Button(
                 onClick = {
                     if (locationPermissionState.status.isGranted) {
-
+                        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                            if (location != null) {
+                                scope.launch {
+                                    cameraPositionState.animate(
+                                        CameraUpdateFactory.newLatLngZoom(
+                                            LatLng(location.latitude, location.longitude),
+                                            15f
+                                        )
+                                    )
+                                }
+                            } else {
+                                Toast.makeText(context, "Nie udało się pobrać lokalizacji. Upewnij się, że GPS jest włączony.", Toast.LENGTH_SHORT).show()
+                            }
+                        }.addOnFailureListener {
+                            Toast.makeText(context, "Błąd podczas pobierania lokalizacji: ${it.message}", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
                         locationPermissionState.launchPermissionRequest()
                     }

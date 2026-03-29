@@ -93,6 +93,7 @@ dependencies {
     // Maps & Permissions
     implementation(libs.maps.compose)
     implementation(libs.accompanist.permissions)
+    implementation(libs.play.services.location)
 
     // Testing
     testImplementation(libs.junit)
