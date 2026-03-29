@@ -13,3 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+google-services.json
+
+.claude
+.agent
+.agents
+skills-lock.json

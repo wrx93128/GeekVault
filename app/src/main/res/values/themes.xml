@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.GeekVault" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Base app theme used after the splash screen dismisses -->
+    <style name="Theme.GeekVault" parent="Theme.Material3.DayNight.NoActionBar" />
+
+    <!-- Splash screen theme — set as the activity theme in the manifest -->
+    <style name="Theme.GeekVault.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#0D1B2A</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.GeekVault</item>
+    </style>
+
 </resources>
