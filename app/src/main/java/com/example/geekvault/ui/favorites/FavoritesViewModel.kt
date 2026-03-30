@@ -19,6 +19,12 @@ class FavoritesViewModel(private val favoriteDao: FavoriteDao) : ViewModel() {
             initialValue = emptyList()
         )
 
+    fun insertFavorite(character: FavoriteCharacter) {
+        viewModelScope.launch {
+            favoriteDao.insertFavorite(character)
+        }
+    }
+
     fun deleteFavorite(character: FavoriteCharacter) {
         viewModelScope.launch {
             favoriteDao.deleteFavorite(character)

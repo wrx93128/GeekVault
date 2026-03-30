@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -18,6 +20,7 @@ import com.example.geekvault.ui.auth.RegisterScreen
 import com.example.geekvault.ui.contact.ContactScreen
 import com.example.geekvault.ui.favorites.FavoritesScreen
 import com.example.geekvault.ui.favorites.FavoritesViewModel
+import com.example.geekvault.ui.home.HomeScreen
 import com.example.geekvault.ui.main.MainScaffold
 import com.google.firebase.auth.FirebaseAuth
 
@@ -68,13 +71,22 @@ fun AppNavigation() {
         // ── Main routes — wrapped in MainScaffold ───────────────────────────
 
         composable(AppDestinations.HOME) {
+            val database = AppDatabase.getDatabase(context)
+            val favoritesViewModel: FavoritesViewModel = viewModel(
+                factory = FavoritesViewModel.Factory(database.favoriteDao())
+            )
+            val favorites by favoritesViewModel.favorites.collectAsState()
+            val favoriteIds = favorites.map { it.id }.toSet()
             MainScaffold(navController = navController) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Home Screen")
-                }
+                HomeScreen(
+                    favoriteIds = favoriteIds,
+                    onFavoriteClick = { favoriteCharacter ->
+                        favoritesViewModel.insertFavorite(favoriteCharacter)
+                    },
+                    onRemoveFavorite = { favoriteCharacter ->
+                        favoritesViewModel.deleteFavorite(favoriteCharacter)
+                    }
+                )
             }
         }
 
