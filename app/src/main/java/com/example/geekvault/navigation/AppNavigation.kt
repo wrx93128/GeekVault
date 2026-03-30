@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -73,10 +75,16 @@ fun AppNavigation() {
             val favoritesViewModel: FavoritesViewModel = viewModel(
                 factory = FavoritesViewModel.Factory(database.favoriteDao())
             )
+            val favorites by favoritesViewModel.favorites.collectAsState()
+            val favoriteIds = favorites.map { it.id }.toSet()
             MainScaffold(navController = navController) {
                 HomeScreen(
+                    favoriteIds = favoriteIds,
                     onFavoriteClick = { favoriteCharacter ->
                         favoritesViewModel.insertFavorite(favoriteCharacter)
+                    },
+                    onRemoveFavorite = { favoriteCharacter ->
+                        favoritesViewModel.deleteFavorite(favoriteCharacter)
                     }
                 )
             }

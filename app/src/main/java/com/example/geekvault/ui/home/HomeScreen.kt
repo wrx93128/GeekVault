@@ -20,7 +20,9 @@ import com.example.geekvault.data.model.Character
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
-    onFavoriteClick: (FavoriteCharacter) -> Unit = {}
+    favoriteIds: Set<Int> = emptySet(),
+    onFavoriteClick: (FavoriteCharacter) -> Unit = {},
+    onRemoveFavorite: (FavoriteCharacter) -> Unit = {}
 ) {
     when (val state = viewModel.uiState) {
 
@@ -37,7 +39,12 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(state.characters) { character ->
-                    CharacterCard(character = character, onFavoriteClick = onFavoriteClick)
+                    CharacterCard(
+                        character = character,
+                        isFavorite = character.id in favoriteIds,
+                        onFavoriteClick = onFavoriteClick,
+                        onRemoveFavorite = onRemoveFavorite
+                    )
                 }
             }
         }
@@ -61,9 +68,38 @@ fun HomeScreen(
 @Composable
 fun CharacterCard(
     character: Character,
-    onFavoriteClick: (FavoriteCharacter) -> Unit
+    isFavorite: Boolean,
+    onFavoriteClick: (FavoriteCharacter) -> Unit,
+    onRemoveFavorite: (FavoriteCharacter) -> Unit
 ) {
-    var isFavorite by remember { mutableStateOf(false) }
+    var showRemoveDialog by remember { mutableStateOf(false) }
+
+    if (showRemoveDialog) {
+        AlertDialog(
+            onDismissRequest = { showRemoveDialog = false },
+            title = { Text("Usuń z ulubionych") },
+            text = { Text("Czy na pewno chcesz usunąć ${character.name} z ulubionych?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showRemoveDialog = false
+                    onRemoveFavorite(
+                        FavoriteCharacter(
+                            id = character.id,
+                            name = character.name,
+                            imageUrl = character.image
+                        )
+                    )
+                }) {
+                    Text("Tak")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showRemoveDialog = false }) {
+                    Text("Nie")
+                }
+            }
+        )
+    }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -91,8 +127,9 @@ fun CharacterCard(
                 )
             }
             IconButton(onClick = {
-                isFavorite = !isFavorite
                 if (isFavorite) {
+                    showRemoveDialog = true
+                } else {
                     onFavoriteClick(
                         FavoriteCharacter(
                             id = character.id,
