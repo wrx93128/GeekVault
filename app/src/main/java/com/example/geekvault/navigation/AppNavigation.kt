@@ -18,6 +18,7 @@ import com.example.geekvault.ui.auth.RegisterScreen
 import com.example.geekvault.ui.contact.ContactScreen
 import com.example.geekvault.ui.favorites.FavoritesScreen
 import com.example.geekvault.ui.favorites.FavoritesViewModel
+import com.example.geekvault.ui.home.HomeScreen
 import com.example.geekvault.ui.main.MainScaffold
 import com.google.firebase.auth.FirebaseAuth
 
@@ -68,13 +69,16 @@ fun AppNavigation() {
         // ── Main routes — wrapped in MainScaffold ───────────────────────────
 
         composable(AppDestinations.HOME) {
+            val database = AppDatabase.getDatabase(context)
+            val favoritesViewModel: FavoritesViewModel = viewModel(
+                factory = FavoritesViewModel.Factory(database.favoriteDao())
+            )
             MainScaffold(navController = navController) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Home Screen")
-                }
+                HomeScreen(
+                    onFavoriteClick = { favoriteCharacter ->
+                        favoritesViewModel.insertFavorite(favoriteCharacter)
+                    }
+                )
             }
         }
 
