@@ -33,18 +33,28 @@ fun HomeScreen(
         }
 
         is HomeUiState.Success -> {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(state.characters) { character ->
-                    CharacterCard(
-                        character = character,
-                        isFavorite = character.id in favoriteIds,
-                        onFavoriteClick = onFavoriteClick,
-                        onRemoveFavorite = onRemoveFavorite
-                    )
+            Column(modifier = Modifier.fillMaxSize()) {
+                Button(
+                    onClick = { viewModel.fetchCharacters() },
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text("Odśwież")
+                }
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(state.characters) { character ->
+                        CharacterCard(
+                            character = character,
+                            isFavorite = character.id in favoriteIds,
+                            onFavoriteClick = onFavoriteClick,
+                            onRemoveFavorite = onRemoveFavorite
+                        )
+                    }
                 }
             }
         }

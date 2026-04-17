@@ -50,7 +50,6 @@ fun MainScaffold(
     val screenTitle = when (currentRoute) {
         AppDestinations.HOME      -> "Home"
         AppDestinations.FAVORITES -> "Ulubione"
-        AppDestinations.PROFILE   -> "Profil"
         AppDestinations.CONTACT   -> "Kontakt"
         else                      -> "GeekVault"
     }

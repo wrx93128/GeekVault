@@ -24,7 +24,7 @@ private data class BottomNavItem(
 private val bottomNavItems = listOf(
     BottomNavItem(AppDestinations.HOME,      "Home",      Icons.Default.Home),
     BottomNavItem(AppDestinations.FAVORITES, "Ulubione",  Icons.Default.Favorite),
-    BottomNavItem(AppDestinations.PROFILE,   "Profil",    Icons.Default.Person)
+    BottomNavItem(AppDestinations.CONTACT,   "Kontakt",    Icons.Default.Person)
 )
 
 /**

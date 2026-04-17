@@ -100,17 +100,6 @@ fun AppNavigation() {
             }
         }
 
-        composable(AppDestinations.PROFILE) {
-            MainScaffold(navController = navController) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Profil")
-                }
-            }
-        }
-
         composable(AppDestinations.CONTACT) {
             MainScaffold(navController = navController) {
                 ContactScreen()

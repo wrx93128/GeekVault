@@ -37,7 +37,6 @@ private data class DrawerNavItem(
 private val drawerNavItems = listOf(
     DrawerNavItem(AppDestinations.HOME,      "Home",      Icons.Default.Home),
     DrawerNavItem(AppDestinations.FAVORITES, "Ulubione",  Icons.Default.Favorite),
-    DrawerNavItem(AppDestinations.PROFILE,   "Profil",    Icons.Default.Person),
     DrawerNavItem(AppDestinations.CONTACT,   "Kontakt",   Icons.Default.Email)
 )
 
